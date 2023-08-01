@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ToDoList</string>
+    <string name="empty_task">No hay tareas creadas\nCrea tu primer tarea presionando el botón +</string>
 </resources>
