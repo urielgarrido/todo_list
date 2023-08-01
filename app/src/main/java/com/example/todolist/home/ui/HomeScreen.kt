@@ -100,6 +100,8 @@ fun HomeScreen(tasks: List<TaskModel>, createTask: (String, String) -> Unit, onT
                     Button(onClick = {
                         createTask(title, task)
                         changeDialogVisibility()
+                        title = ""
+                        task = ""
                     }, modifier = Modifier.fillMaxWidth(), enabled = title.isNotBlank() && task.isNotBlank()) {
                         Text(text = "Crear")
                     }
