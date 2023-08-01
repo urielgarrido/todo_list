@@ -11,12 +11,16 @@ class TaskRepository @Inject constructor(private val taskDao: TaskDao) {
 
     val tasks: Flow<List<TaskModel>> = taskDao.getTasks().map { items ->
         items.map {
-            TaskModel(it.id, it.title, it.task)
+            TaskModel(it.id, it.title, it.task, it.isCompleted)
         }
     }
 
     suspend fun add(taskModel: TaskModel) {
         taskDao.addTask(taskModel.toEntity())
+    }
+
+    suspend fun completeTask(taskModel: TaskModel) {
+        taskDao.completeTask(taskModel.toEntity())
     }
 
     suspend fun delete(taskModel: TaskModel) {
@@ -25,5 +29,5 @@ class TaskRepository @Inject constructor(private val taskDao: TaskDao) {
 }
 
 fun TaskModel.toEntity(): TaskEntity {
-    return TaskEntity(this.id, this.title, this.task)
+    return TaskEntity(this.id, this.title, this.task, this.isCompleted)
 }

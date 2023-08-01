@@ -2,6 +2,7 @@ package com.example.todolist.home.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.todolist.detail.use_case.CompleteTaskUseCase
 import com.example.todolist.detail.use_case.DeleteTaskUseCase
 import com.example.todolist.home.use_case.AddTaskUseCase
 import com.example.todolist.home.use_case.GetTasksUseCase
@@ -17,6 +18,7 @@ import javax.inject.Inject
 class TaskViewModel @Inject constructor(
     private val getTasksUseCase: GetTasksUseCase,
     private val addTaskUseCase: AddTaskUseCase,
+    private val completeTaskUseCase: CompleteTaskUseCase,
     private val deleteTaskUseCase: DeleteTaskUseCase,
 ) : ViewModel() {
 
@@ -42,6 +44,13 @@ class TaskViewModel @Inject constructor(
     fun addTask(title: String, task: String) {
         viewModelScope.launch {
             addTaskUseCase(TaskModel(title = title, task = task))
+        }
+    }
+
+    fun completeTask(taskModel: TaskModel) {
+        viewModelScope.launch {
+            val completedTask = taskModel.copy(isCompleted = true)
+            completeTaskUseCase(completedTask)
         }
     }
 

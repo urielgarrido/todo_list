@@ -8,5 +8,6 @@ data class TaskEntity(
     @PrimaryKey
     val id: Int,
     val title: String,
-    val task: String
+    val task: String,
+    val isCompleted: Boolean,
 )

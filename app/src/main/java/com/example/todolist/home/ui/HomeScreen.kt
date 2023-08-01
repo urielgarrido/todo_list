@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,9 +18,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -41,6 +44,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.example.todolist.R
 import com.example.todolist.model.TaskModel
+import com.example.todolist.ui.theme.Complete
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -146,13 +150,35 @@ fun TaskItem(taskModel: TaskModel, onTaskPress: (TaskModel) -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp)
-            .clickable { onTaskPress(taskModel) }
+            .clickable { onTaskPress(taskModel) },
+        colors = CardDefaults.cardColors(
+            containerColor = if (taskModel.isCompleted) {
+                Complete
+            } else MaterialTheme.colorScheme.surfaceVariant
+        )
     ) {
-        Column(modifier = Modifier
-            .fillMaxWidth()
-            .heightIn(max = 120.dp)
-            .padding(8.dp)) {
-            Text(text = taskModel.title, fontWeight = FontWeight.Bold, fontSize = 18.sp, overflow = TextOverflow.Ellipsis)
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .heightIn(max = 120.dp)
+                .padding(8.dp)
+        )
+        {
+            Row {
+                Text(
+                    text = taskModel.title,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 18.sp,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(end = 8.dp),
+                )
+                Text(
+                    text = if (taskModel.isCompleted) "Completada" else "Pendiente",
+                    fontSize = 12.sp
+                )
+            }
             Spacer(modifier = Modifier.height(8.dp))
             Text(text = taskModel.task, overflow = TextOverflow.Ellipsis)
         }

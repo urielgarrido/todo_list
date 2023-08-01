@@ -72,13 +72,19 @@ class MainActivity : ComponentActivity() {
                                 navigateHome()
                             }
 
+                            fun completeTask(taskModel: TaskModel) {
+                                viewModel.setSelectedTask(null)
+                                viewModel.completeTask(taskModel)
+                                navigateHome()
+                            }
+
                             fun deleteTask(taskModel: TaskModel) {
                                 viewModel.setSelectedTask(null)
                                 viewModel.deleteTask(taskModel)
                                 navigateHome()
                             }
 
-                            DetailScreen(state.taskSelected!!, ::cleanTaskSelected, ::deleteTask)
+                            DetailScreen(state.taskSelected!!, ::cleanTaskSelected, ::completeTask, ::deleteTask)
                         }
                     }
 

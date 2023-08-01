@@ -21,7 +21,12 @@ import com.example.todolist.model.TaskModel
 import com.example.todolist.ui.theme.Delete
 
 @Composable
-fun DetailScreen(taskSelected: TaskModel, onBackPress: () -> Unit, deleteTask: (TaskModel) -> Unit) {
+fun DetailScreen(
+    taskSelected: TaskModel,
+    onBackPress: () -> Unit,
+    completeTask: (TaskModel) -> Unit,
+    deleteTask: (TaskModel) -> Unit
+) {
 
     BackHandler(onBack = onBackPress)
 
@@ -34,6 +39,17 @@ fun DetailScreen(taskSelected: TaskModel, onBackPress: () -> Unit, deleteTask: (
         Spacer(modifier = Modifier.height(16.dp))
         Text(text = taskSelected.task)
         Spacer(modifier = Modifier.height(16.dp))
+
+        if (!taskSelected.isCompleted) {
+            Button(
+                onClick = { completeTask(taskSelected) },
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                Text(text = "Completar tarea", color = Color.White)
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+        }
+
         Button(
             onClick = { deleteTask(taskSelected) },
             modifier = Modifier.fillMaxWidth(),
