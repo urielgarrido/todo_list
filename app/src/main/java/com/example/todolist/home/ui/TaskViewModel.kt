@@ -12,6 +12,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
@@ -43,13 +46,13 @@ class TaskViewModel @Inject constructor(
 
     fun addTask(title: String, task: String) {
         viewModelScope.launch {
-            addTaskUseCase(TaskModel(title = title, task = task))
+            addTaskUseCase(TaskModel(title = title, task = task, taskCreatedDate = getCurrentDateTime()))
         }
     }
 
     fun completeTask(taskModel: TaskModel) {
         viewModelScope.launch {
-            val completedTask = taskModel.copy(isCompleted = true)
+            val completedTask = taskModel.copy(isCompleted = true, taskCompletedDate = getCurrentDateTime())
             completeTaskUseCase(completedTask)
         }
     }
@@ -58,6 +61,17 @@ class TaskViewModel @Inject constructor(
         viewModelScope.launch {
             deleteTaskUseCase(taskModel)
         }
+    }
+
+    private fun getCurrentDateTime(): String {
+        val calendar = Calendar.getInstance()
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val timeFormat = SimpleDateFormat("HH:mm 'hs'", Locale.getDefault())
+
+        val date = dateFormat.format(calendar.time)
+        val time = timeFormat.format(calendar.time)
+
+        return "$date a las $time"
     }
 
 }

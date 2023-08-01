@@ -39,8 +39,10 @@ fun DetailScreen(
         Spacer(modifier = Modifier.height(16.dp))
         Text(text = taskSelected.task)
         Spacer(modifier = Modifier.height(16.dp))
+        Text(text = "Creada el ${taskSelected.taskCreatedDate}", fontSize = 12.sp)
 
         if (!taskSelected.isCompleted) {
+            Spacer(modifier = Modifier.height(16.dp))
             Button(
                 onClick = { completeTask(taskSelected) },
                 modifier = Modifier.fillMaxWidth(),
@@ -48,6 +50,10 @@ fun DetailScreen(
                 Text(text = "Completar tarea", color = Color.White)
             }
             Spacer(modifier = Modifier.height(8.dp))
+        } else {
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(text = "Completada el ${taskSelected.taskCompletedDate}", fontSize = 12.sp)
+            Spacer(modifier = Modifier.height(16.dp))
         }
 
         Button(

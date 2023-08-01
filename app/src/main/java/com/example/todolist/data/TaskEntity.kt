@@ -10,4 +10,6 @@ data class TaskEntity(
     val title: String,
     val task: String,
     val isCompleted: Boolean,
+    val taskCreatedDate: String,
+    val taskCompletedDate: String?,
 )
